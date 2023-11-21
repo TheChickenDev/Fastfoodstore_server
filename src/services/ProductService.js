@@ -16,12 +16,14 @@ const createProduct = (data, fileData) => {
                 });
             } else {
                 const img = fileData?.path;
+                const imgID = fileData?.filename;
                 const newProduct = await Product.create({
                     name,
                     desc,
                     type,
                     price,
                     img,
+                    imgID,
                 });
                 if (newProduct) {
                     resolve({
@@ -51,11 +53,9 @@ const updateProduct = (_id, data, fileData) => {
                 });
             }
 
-            if (checkProduct?.img && fileData) {
-                var regex = /\/([^\/]+\/[^\/]+\/[^\/]+)\.png$/;
-                var match = checkProduct.img?.match(regex);
-                var desiredPart = match[1];
-                if (desiredPart) cloudinary.uploader.destroy(desiredPart);
+            if (checkProduct?.imgID && fileData) {
+                var imageID = checkProduct.imgID;
+                if (imageID) cloudinary.uploader.destroy(imageID);
             }
 
             const img = fileData?.path;
@@ -88,11 +88,9 @@ const deleteProduct = (_id) => {
                 });
             }
 
-            if (checkProduct?.img) {
-                var regex = /\/([^\/]+\/[^\/]+\/[^\/]+)\.png$/;
-                var match = checkProduct.img?.match(regex);
-                var desiredPart = match[1];
-                if (desiredPart) cloudinary.uploader.destroy(desiredPart);
+            if (checkProduct?.imgID) {
+                var imageID = checkProduct.imgID;
+                if (imageID) cloudinary.uploader.destroy(imageID);
             }
 
             await Product.findByIdAndDelete(_id, { new: true });

@@ -21,6 +21,7 @@ const createUser = (data, fileData) => {
                 });
             } else {
                 const avatar = fileData?.path;
+                const avatarID = fileData?.filename;
                 const hashPassword = bcrypt.hashSync(password, 10);
                 const newUser = await User.create({
                     name,
@@ -30,6 +31,7 @@ const createUser = (data, fileData) => {
                     address,
                     phone,
                     avatar,
+                    avatarID,
                 });
                 if (newUser) {
                     resolve({
@@ -113,15 +115,14 @@ const updateUser = (_id, data, fileData) => {
                 });
             }
 
-            if (checkUser?.avatar && fileData) {
-                var regex = /\/([^\/]+\/[^\/]+\/[^\/]+)\.png$/;
-                var match = checkUser.avatar?.match(regex);
-                var desiredPart = match[1];
-                if (desiredPart) cloudinary.uploader.destroy(desiredPart);
+            if (checkUser?.avatarID && fileData) {
+                var imageID = checkUser.avatarID;
+                if (imageID) cloudinary.uploader.destroy(imageID);
             }
 
             const avatar = fileData?.path;
-            newData = { ...data, avatar };
+            const avatarID = fileData?.filename;
+            newData = { ...data, avatar, avatarID };
             const updatedUser = await User.findByIdAndUpdate(_id, newData, {
                 new: true,
             });
@@ -250,11 +251,9 @@ const deleteUser = (_id) => {
                 });
             }
 
-            if (checkUser?.avatar) {
-                var regex = /\/([^\/]+\/[^\/]+\/[^\/]+)\.png$/;
-                var match = checkUser.avatar?.match(regex);
-                var desiredPart = match[1];
-                if (desiredPart) cloudinary.uploader.destroy(desiredPart);
+            if (checkUser?.avatarID) {
+                var imageID = checkUser.avatarID;
+                if (imageID) cloudinary.uploader.destroy(imageID);
             }
 
             await User.findByIdAndDelete(_id, { new: true });

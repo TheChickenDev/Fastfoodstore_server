@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema(
             required: false,
             default: '',
         },
+        avatarID: {
+            type: String,
+            required: false,
+            default: '',
+        },
         cart: { type: Array, required: false, default: [] },
     },
     { timestamps: true },

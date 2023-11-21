@@ -10,6 +10,11 @@ const productSchema = new mongoose.Schema({
         required: false,
         default: '',
     },
+    imgID: {
+        type: String,
+        required: false,
+        default: '',
+    },
 });
 
 const Product = mongoose.model('Product', productSchema);
