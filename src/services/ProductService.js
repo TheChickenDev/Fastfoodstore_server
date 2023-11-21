@@ -51,7 +51,7 @@ const updateProduct = (_id, data, fileData) => {
                 });
             }
 
-            if (checkProduct?.img) {
+            if (checkProduct?.img && fileData) {
                 var regex = /\/([^\/]+\/[^\/]+\/[^\/]+)\.png$/;
                 var match = checkProduct.img?.match(regex);
                 var desiredPart = match[1];

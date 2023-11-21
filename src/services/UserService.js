@@ -113,7 +113,7 @@ const updateUser = (_id, data, fileData) => {
                 });
             }
 
-            if (checkUser?.avatar) {
+            if (checkUser?.avatar && fileData) {
                 var regex = /\/([^\/]+\/[^\/]+\/[^\/]+)\.png$/;
                 var match = checkUser.avatar?.match(regex);
                 var desiredPart = match[1];
