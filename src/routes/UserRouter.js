@@ -7,7 +7,7 @@ const { uploadUserCloud } = require('../middlewares/uploadMiddleware');
 router.post('/sign-up', uploadUserCloud.single('image'), userController.createUser);
 router.post('/sign-in', userController.loginUser);
 router.post('/log-out', userController.logoutUser);
-router.post('/update/:id', uploadUserCloud.single('image'), userController.updateUser);
+router.put('/update/:id', uploadUserCloud.single('image'), userController.updateUser);
 router.post('/add-to-cart/:id', userController.addToCart);
 router.post('/delete-from-cart/:id', userController.deleteFromCart);
 router.post('/clear-cart/:id', userController.clearCart);
